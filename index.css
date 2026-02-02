@@ -1,0 +1,780 @@
+:root{
+    --background-color: #f0f0f0;
+    --font-size: 20px;
+    --transition : all 0.3s ease;
+    --font-color: #ffffff;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+*{
+    box-sizing: border-box;
+    font-family: var(--font-family);
+    transition: var(--transition);
+}
+
+.btn{
+    font-size: 1rem;
+    background-color:rgb(70, 70, 160);
+    color:var(--font-color);
+    border-radius: 10px;
+}
+
+.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); }
+
+
+.navbar{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(58, 58, 163, 0.9);
+    color: var(--font-color);
+    padding: 10px 20px;
+}
+
+.nav-left {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--font-color);
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#user-info {
+    font-size: 1.1rem;
+    margin-left: 20px;
+}
+
+.logo {
+    font-size : 1.7rem;
+}
+
+.navbar h1{
+    margin: 10px;
+    font-size: 2.5rem;
+}
+
+.container-todos{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    padding-top: 20px;
+}
+
+.container-todos h2{
+    padding : 20px;
+    font-size:2rem;
+    color:rgb(58, 58, 163);
+}
+
+#todoInput {
+    width :400px;
+    height: 45px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+.container-todos button{
+    padding: 10px;
+    width:70px;
+    height : 45px;
+}
+
+.container-todo-list h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-style: italic;
+    text-decoration:underline;
+    color :rgb(58, 58, 163);
+}
+.login-container p{
+    font-size: 1.75rem;
+    font-style: italic;
+    color :rgb(58, 58, 163);
+    margin-top: 100px;
+}
+
+.login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container button{
+    padding: 10px;
+    width:70px;
+    height : 45px;
+}
+
+#form-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    z-index: 1001;
+    margin: 0;
+}
+
+#form-dialog h2 {
+    margin-top: 0;
+    color: rgb(58, 58, 163);
+    text-align: center;
+}
+
+#form-dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#form-dialog label {
+    font-weight: bold;
+    color: rgb(58, 58, 163);
+}
+
+#form-dialog input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#form-dialog button {
+    padding: 10px;
+    background-color: rgb(70, 70, 160);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: block;
+    margin: 0 auto;
+}
+
+#form-dialog button:hover {
+    background-color: rgb(50, 50, 140);
+}
+
+.footer{
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(58, 58, 163);
+    color: var(--font-color);
+
+}
+
+@media (max-width: 480px) {
+    .footer {
+        position: static;
+        margin-top: 20px;
+        padding: 10px;
+    }
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+#mainTodoList {
+    list-style: none;
+    padding: 0;
+    background-color: rgba(240, 240, 240, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 1.2rem;
+}
+
+.icon:hover {
+    transform: scale(1.1);
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.edit-buttons button {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-buttons button:first-child {
+    color: green;
+}
+
+.edit-buttons button:first-child:hover {
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+.edit-buttons button:last-child {
+    color: red;
+}
+
+.edit-buttons button:last-child:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: row;
+        height: auto;
+        padding: 10px;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .navbar h1 {
+        font-size: 1.5rem;
+        margin: 10px 0;
+    }
+
+    .container-todos {
+        flex-direction: column;
+        margin: 20px;
+        align-items: center;
+    }
+
+    .container-todos h2 {
+        font-size: 1.5rem;
+        padding: 10px;
+    }
+
+    #todoInput {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .container-todos button {
+        width: 60px;
+        height: 35px;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    .container-todo-list h2 {
+        font-size: 1.8rem;
+    }
+
+    .login-container p {
+        font-size: 1.25rem;
+        margin-top: 50px;
+    }
+
+    .login-container {
+        padding: 20px;
+        align-items: center;
+    }
+
+    .login-container button {
+        width: 60px;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+
+    .footer {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
+    #form-dialog {
+        width: 95%;
+        max-width: 300px;
+        padding: 15px;
+    }
+
+    #form-dialog h2 {
+        font-size: 1.5rem;
+    }
+
+    #form-dialog input {
+        font-size: 0.9rem;
+    }
+
+    #form-dialog button {
+        font-size: 0.9rem;
+    }
+
+    #mainTodoList {
+        padding: 10px;
+        margin: 10px auto;
+        max-width: 90%;
+    }
+
+    .todo-item {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .icon {
+        font-size: 1rem;
+        margin-left: 5px;
+    }
+
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 600px;
+}
+
+.weather-container h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: rgb(58, 58, 163);
+}
+
+.weather-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.weather-container input {
+    width: 100%;
+    max-width: 400px;
+    height: 45px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+.weather-container button {
+    width: 100%;
+    max-width: 200px;
+    height: 45px;
+    font-size: 1rem;
+}
+
+.weather-info {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 90%;
+    background-color: rgba(240, 240, 240, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info.error {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: red;
+    border: 1px solid red;
+}
+
+.weather-info h3 {
+    font-size: 1.5rem;
+    color: rgb(58, 58, 163);
+    margin-bottom: 10px;
+}
+
+.weather-info p {
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+}
+
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .navbar {
+        padding: 15px;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .navbar h1 {
+        font-size: 2rem;
+        margin: 8px;
+    }
+
+    .container-todos {
+        margin: 30px;
+        flex-wrap: wrap;
+    }
+
+    .container-todos h2 {
+        font-size: 1.8rem;
+        padding: 15px;
+    }
+
+    #todoInput {
+        width: 300px;
+    }
+
+    .container-todo-list h2 {
+        font-size: 2rem;
+    }
+
+    .login-container p {
+        font-size: 1.5rem;
+        margin-top: 80px;
+    }
+
+    .login-container {
+        padding: 30px;
+    }
+
+    .footer {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+
+    #form-dialog {
+        width: 90%;
+        max-width: 350px;
+        padding: 18px;
+    }
+
+    #form-dialog h2 {
+        font-size: 1.8rem;
+    }
+
+    #form-dialog input {
+        font-size: 0.95rem;
+    }
+
+    #form-dialog button {
+        font-size: 0.95rem;
+    }
+
+    .weather-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 50px auto;
+        padding: 20px;
+        max-width: 600px;
+    }
+
+    .weather-container h2 {
+        margin-bottom: 20px;
+        font-size: 2rem;
+        color: rgb(58, 58, 163);
+    }
+
+    .weather-container form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .weather-container input {
+        width: 100%;
+        max-width: 400px;
+        height: 45px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 0 10px;
+    }
+
+    .weather-container button {
+        width: 100%;
+        max-width: 200px;
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    .weather-info {
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 90%;
+        background-color: rgba(240, 240, 240, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .weather-info.error {
+        background-color: rgba(255, 0, 0, 0.1);
+        color: red;
+        border: 1px solid red;
+    }
+
+    .weather-info h3 {
+        font-size: 1.5rem;
+        color: rgb(58, 58, 163);
+        margin-bottom: 10px;
+    }
+
+    .weather-info p {
+        font-size: 1.1rem;
+        margin: 5px 0;
+    }
+}
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .navbar {
+        padding: 20px;
+    }
+
+    .logo {
+        font-size: 1.7rem;
+    }
+
+    .navbar h1 {
+        font-size: 2.3rem;
+        margin: 9px;
+    }
+
+    .container-todos {
+        margin: 40px;
+    }
+
+    .container-todos h2 {
+        font-size: 1.9rem;
+        padding: 18px;
+    }
+
+    #todoInput {
+        width: 350px;
+    }
+
+    .container-todo-list h2 {
+        font-size: 2.3rem;
+    }
+
+    .login-container p {
+        font-size: 1.6rem;
+        margin-top: 90px;
+    }
+
+    .login-container {
+        padding: 40px;
+        margin-bottom: 80px;
+    }
+
+    .footer {
+        padding: 20px;
+        font-size: 0.95rem;
+    }
+
+    #form-dialog {
+        width: 85%;
+        max-width: 380px;
+        padding: 20px;
+    }
+
+    #form-dialog h2 {
+        font-size: 2rem;
+    }
+
+    #form-dialog input {
+        font-size: 1rem;
+    }
+
+    #form-dialog button {
+        font-size: 1rem;
+    }
+}
+
+
+@media (min-width: 1025px) {
+    .navbar {
+        padding: 25px;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    .navbar h1 {
+        font-size: 2.5rem;
+        margin: 10px;
+    }
+
+    .container-todos {
+        margin: 50px;
+    }
+
+    .container-todos h2 {
+        font-size: 2rem;
+        padding: 20px;
+    }
+
+    #todoInput {
+        width: 400px;
+    }
+
+    .container-todo-list h2 {
+        font-size: 2.5rem;
+    }
+
+    .login-container p {
+        font-size: 1.75rem;
+        margin-top: 100px;
+    }
+
+    .login-container {
+        padding: 50px;
+    }
+
+    .footer {
+        padding: 25px;
+        font-size: 1rem;
+    }
+
+    #form-dialog {
+        width: 90%;
+        max-width: 400px;
+        padding: 20px;
+    }
+
+    #form-dialog h2 {
+        font-size: 2.2rem;
+    }
+
+    #form-dialog input {
+        font-size: 1rem;
+    }
+
+    #form-dialog button {
+        font-size: 1rem;
+    }
+
+    .weather-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 50px auto;
+        padding: 20px;
+        max-width: 600px;
+    }
+
+    .weather-container h2 {
+        margin-bottom: 20px;
+        font-size: 2rem;
+        color: rgb(58, 58, 163);
+    }
+
+    .weather-container form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .weather-container input {
+        width: 100%;
+        max-width: 400px;
+        height: 45px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 0 10px;
+    }
+
+    .weather-container button {
+        width: 100%;
+        max-width: 200px;
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    .weather-info {
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 90%;
+        background-color: rgba(240, 240, 240, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .weather-info.error {
+        background-color: rgba(255, 0, 0, 0.1);
+        color: red;
+        border: 1px solid red;
+    }
+
+    .weather-info h3 {
+        font-size: 1.5rem;
+        color: rgb(58, 58, 163);
+        margin-bottom: 10px;
+    }
+
+    .weather-info p {
+        font-size: 1.1rem;
+        margin: 5px 0;
+    }
+}
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <a href="#" data-link class="nav-link">📝 Todo</a>
+                <a href="#weather" data-link class="nav-link">🌤️ Weather</a>
+            </div>
+            <div class="nav-right">
+                <span id="user-info" style="display: none;">👤 <span id="user-name"></span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-todos">
+            <h2>Add Todos </h2>
+            <form id="todoForm">
+                <input type="text" id="todoInput" placeholder="Add a new todo" required>
+                <button class="btn" type="submit">Add</button>
+            </form>
+    </div>
+
+    <div class="container-todo-list">
+        <h2>Your Todo List</h2>
+            <div class="login-container">
+                <p>Login for your Todo List</p>
+                <button class="btn submit-btn" type="submit" id="login">Login</button>
+                <button class="btn submit-btn" type="submit" id="logout" hidden>Logout</button>
+                <dialog id="form-dialog">
+                    <h2>Login</h2>
+                    <form id="login-form" method="dialog"> 
+                        <label for="name">Name : </label>
+                        <input type="text" id="name" placeholder="name">
+                        <label for="password">Password : </label>
+                        <input type="password" id="password" placeholder="password">
+                        <button type="submit" id="submit-form-button">Submit</button>
+                    </form>
+                </dialog>
+            </div>
+        <ul id="mainTodoList" style="display: none;"></ul>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Todo App. All rights reserved.</p>
+    </footer>
+
+    
+
+    <script src="router.js"></script>
+    <script type="module" src="app.js"></script>
+
+</body>
+</html>
