@@ -4,7 +4,7 @@ let users = (() => {
 
     try {
         const decrypted = decryptData(storedData);
-        console.log(decrypted);
+        console.log(encryptData);
         return JSON.parse(decrypted);
        
     } catch {
