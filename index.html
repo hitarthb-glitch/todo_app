@@ -15,11 +15,13 @@
             </div>
             <div class="nav-right">
                 <span id="user-info" style="display: none;">👤 <span id="user-name"></span></span>
+                <button class="btn" id="logout" hidden>Logout</button>
             </div>
         </nav>
     </header>
 
-    <div class="container-todos">
+    <div class="container-todos" style="display: none;">
+            <h2>Your Todo List</h2>
             <h2>Add Todos </h2>
             <form id="todoForm">
                 <input type="text" id="todoInput" placeholder="Add a new todo" required>
@@ -28,19 +30,50 @@
     </div>
 
     <div class="container-todo-list">
-        <h2>Your Todo List</h2>
             <div class="login-container">
-                <p>Login for your Todo List</p>
-                <button class="btn submit-btn" type="submit" id="login">Login</button>
-                <button class="btn submit-btn" type="submit" id="logout" hidden>Logout</button>
+                <p>Sign in for your Todo List</p>
+                <div class="auth-buttons">
+                    <button class="btn" id="sign-in">Sign In</button>
+                    <button class="btn" id="sign-up">Sign Up</button>
+                </div>
                 <dialog id="form-dialog">
-                    <h2>Login</h2>
-                    <form id="login-form" method="dialog"> 
-                        <label for="name">Name : </label>
-                        <input type="text" id="name" placeholder="name">
-                        <label for="password">Password : </label>
-                        <input type="password" id="password" placeholder="password">
-                        <button type="submit" id="submit-form-button">Submit</button>
+                    <h2 id="dialog-title">Sign In</h2>
+                    <form id="login-form" method="dialog">
+                <div id="sign-in-fields">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="email">Email : </label>
+                            <input type="email" id="email" name="email" placeholder="email" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="password">Password : </label>
+                            <input type="password" id="password" name="password" placeholder="password" required>
+                        </div>
+                    </div>
+                </div>
+                <div id="sign-up-fields" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="firstName">First Name : </label>
+                            <input type="text" id="firstName" name="firstName" placeholder="first name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="lastName">Last Name : </label>
+                            <input type="text" id="lastName" name="lastName" placeholder="last name" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="signUpEmail">Email : </label>
+                            <input type="email" id="signUpEmail" name="signUpEmail" placeholder="email" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="signUpPassword">Password : </label>
+                            <input type="password" id="signUpPassword" name="signUpPassword" placeholder="password" required>
+                        </div>
+                    </div>
+                </div>
+                        <button type="submit" id="submit-form-button" disabled>Submit</button>
                     </form>
                 </dialog>
             </div>

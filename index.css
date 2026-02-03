@@ -19,7 +19,14 @@
     border-radius: 10px;
 }
 
-.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); }
+.btn:disabled {
+    background-color: grey;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); }
 
 
 .navbar{
@@ -72,7 +79,7 @@
 
 .container-todos{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 50px;
@@ -83,6 +90,7 @@
     padding : 20px;
     font-size:2rem;
     color:rgb(58, 58, 163);
+    text-align: center;
 }
 
 #todoInput {
@@ -100,6 +108,12 @@
     height : 45px;
 }
 
+#todoForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .container-todo-list h2{
     display: flex;
     justify-content: center;
@@ -114,6 +128,7 @@
     font-style: italic;
     color :rgb(58, 58, 163);
     margin-top: 100px;
+    text-align: center;
 }
 
 .login-container{
@@ -123,10 +138,17 @@
     align-items: center;
 }
 
-.login-container button{
-    padding: 10px;
-    width:70px;
-    height : 45px;
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.auth-buttons button {
+    padding: 10px 20px;
+    min-width: 100px;
+    height: 45px;
+    white-space: nowrap;
 }
 
 #form-dialog {
@@ -157,6 +179,15 @@
     gap: 15px;
 }
 
+#form-dialog .form-row {
+    display: flex;
+    gap: 10px;
+}
+
+#form-dialog .form-row input {
+    flex: 1;
+}
+
 #form-dialog label {
     font-weight: bold;
     color: rgb(58, 58, 163);
@@ -183,6 +214,32 @@
 
 #form-dialog button:hover {
     background-color: rgb(50, 50, 140);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+#form-dialog button:disabled {
+    background-color: grey;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    min-height: 60px;
+}
+
+.form-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field label {
+    margin-bottom: 5px;
 }
 
 .footer{
@@ -278,6 +335,150 @@ body {
     background-color: rgba(255, 0, 0, 0.2);
 }
 
+.pin-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgb(70, 70, 160);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pin-btn:hover {
+    background-color: rgb(50, 50, 140);
+    transform: scale(1.1);
+}
+
+.pinned-weather {
+    margin: 50px auto;
+    max-width: 100%;
+    padding: 20px;
+    background-color: rgba(240, 240, 240, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pinned-weather h3 {
+    color: rgb(58, 58, 163);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#pinnedWeatherTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#pinnedWeatherTable th,
+#pinnedWeatherTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.75rem;
+}
+
+#pinnedWeatherTable th {
+    background-color: rgb(58, 58, 163);
+    color: white;
+    font-weight: bold;
+    font-size: 0.6rem;
+}
+
+#pinnedWeatherTable tbody tr:hover {
+    background-color: rgba(58, 58, 163, 0.1);
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: red;
+}
+
+.remove-btn:hover {
+    transform: scale(1.1);
+}
+
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 600px;
+}
+
+.weather-container h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: rgb(58, 58, 163);
+}
+
+.weather-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.weather-container input {
+    width: 100%;
+    max-width: 400px;
+    height: 45px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+.weather-container button {
+    width: 100%;
+    max-width: 200px;
+    height: 45px;
+    font-size: 1rem;
+}
+
+.weather-info {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 90%;
+    background-color: rgba(240, 240, 240, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info.error {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: red;
+    border: 1px solid red;
+}
+
+.weather-info h3 {
+    font-size: 1.5rem;
+    color: rgb(58, 58, 163);
+    margin-bottom: 10px;
+}
+
+.weather-info p {
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+
 @media (max-width: 480px) {
     .navbar {
         flex-direction: row;
@@ -363,6 +564,10 @@ body {
         font-size: 0.9rem;
     }
 
+    .form-row {
+        flex-direction: column;
+    }
+
     #mainTodoList {
         padding: 10px;
         margin: 10px auto;
@@ -379,72 +584,7 @@ body {
         margin-left: 5px;
     }
 
-.weather-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 50px auto;
-    padding: 20px;
-    max-width: 600px;
-}
 
-.weather-container h2 {
-    margin-bottom: 20px;
-    font-size: 2rem;
-    color: rgb(58, 58, 163);
-}
-
-.weather-container form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-}
-
-.weather-container input {
-    width: 100%;
-    max-width: 400px;
-    height: 45px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 0 10px;
-}
-
-.weather-container button {
-    width: 100%;
-    max-width: 200px;
-    height: 45px;
-    font-size: 1rem;
-}
-
-.weather-info {
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 90%;
-    background-color: rgba(240, 240, 240, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.weather-info.error {
-    background-color: rgba(255, 0, 0, 0.1);
-    color: red;
-    border: 1px solid red;
-}
-
-.weather-info h3 {
-    font-size: 1.5rem;
-    color: rgb(58, 58, 163);
-    margin-bottom: 10px;
-}
-
-.weather-info p {
-    font-size: 1.1rem;
-    margin: 5px 0;
-}
 }
 
 
@@ -512,71 +652,29 @@ body {
         font-size: 0.95rem;
     }
 
-    .weather-container {
-        display: flex;
+    .form-row {
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 50px auto;
-        padding: 20px;
-        max-width: 600px;
     }
 
-    .weather-container h2 {
-        margin-bottom: 20px;
-        font-size: 2rem;
-        color: rgb(58, 58, 163);
+    .pinned-weather {
+        margin: 40px ;
+        max-width: 700px;
+        padding: 18px;
     }
 
-    .weather-container form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        width: 100%;
+    .pinned-weather h3 {
+        font-size: 1.8rem;
+        margin-bottom: 18px;
     }
 
-    .weather-container input {
-        width: 100%;
-        max-width: 400px;
-        height: 45px;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 0 10px;
+    #pinnedWeatherTable th,
+    #pinnedWeatherTable td {
+        padding: 10px;
+        font-size: 0.95rem;
     }
 
-    .weather-container button {
-        width: 100%;
-        max-width: 200px;
-        height: 45px;
-        font-size: 1rem;
-    }
-
-    .weather-info {
-        padding: 20px;
-        margin: 20px auto;
-        max-width: 90%;
-        background-color: rgba(240, 240, 240, 0.8);
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .weather-info.error {
-        background-color: rgba(255, 0, 0, 0.1);
-        color: red;
-        border: 1px solid red;
-    }
-
-    .weather-info h3 {
-        font-size: 1.5rem;
-        color: rgb(58, 58, 163);
-        margin-bottom: 10px;
-    }
-
-    .weather-info p {
+    .remove-btn {
         font-size: 1.1rem;
-        margin: 5px 0;
     }
 }
 
@@ -644,6 +742,35 @@ body {
     #form-dialog button {
         font-size: 1rem;
     }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .pinned-weather {
+        margin: 35px auto;
+        max-width: 750px;
+        padding: 19px;
+    }
+
+    .pinned-weather h3 {
+        font-size: 1.9rem;
+        margin-bottom: 19px;
+    }
+
+    #pinnedWeatherTable th,
+    #pinnedWeatherTable td {
+        padding: 11px;
+        font-size: 0.98rem;
+    }
+
+    .remove-btn {
+        font-size: 1.15rem;
+    }
+
+    .weather-info {
+        position: relative;
+    }
 }
 
 
@@ -710,71 +837,22 @@ body {
         font-size: 1rem;
     }
 
-    .weather-container {
-        display: flex;
+    .form-row {
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 50px auto;
-        padding: 20px;
-        max-width: 600px;
     }
 
-    .weather-container h2 {
-        margin-bottom: 20px;
+    .pinned-weather {
+        margin: 50px ;
+        padding: 25px;
         font-size: 2rem;
-        color: rgb(58, 58, 163);
     }
 
-    .weather-container form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        width: 100%;
-    }
-
-    .weather-container input {
-        width: 100%;
-        max-width: 400px;
-        height: 45px;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 0 10px;
-    }
-
-    .weather-container button {
-        width: 100%;
-        max-width: 200px;
-        height: 45px;
-        font-size: 1rem;
+    #pinnedWeatherTable th,#pinnedWeatherTable td{
+        font-size: 1.25rem;
     }
 
     .weather-info {
-        padding: 20px;
-        margin: 20px auto;
-        max-width: 90%;
-        background-color: rgba(240, 240, 240, 0.8);
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .weather-info.error {
-        background-color: rgba(255, 0, 0, 0.1);
-        color: red;
-        border: 1px solid red;
-    }
-
-    .weather-info h3 {
-        font-size: 1.5rem;
-        color: rgb(58, 58, 163);
-        margin-bottom: 10px;
-    }
-
-    .weather-info p {
-        font-size: 1.1rem;
-        margin: 5px 0;
+        position: relative;
     }
 }
 

@@ -3,25 +3,69 @@ import { authenticateUser, createUser, getUser, addTodo, updateTodo, removeTodo 
 import { getUsers, saveUsers, getCurrentUserName, setCurrentUserName, removeCurrentUserName } from './storage.js';
 
 export function init() {
+    const currentUserName = getCurrentUserName();
+    if (currentUserName) {
+        document.querySelector('.login-container').style.display = 'none';
+        document.querySelector('.container-todos').style.display = 'block';
+        document.getElementById('logout').removeAttribute('hidden');
+        document.getElementById('mainTodoList').style.display = 'block';
+
+        const userInfo = document.getElementById('user-info');
+        const userNameSpan = document.getElementById('user-name');
+        const user = getUser(currentUserName);
+        userNameSpan.textContent = user.firstName + user.lastName.charAt(0);
+        userInfo.style.display = 'inline';
+    }
     setupEventListeners();
 }
 
+let isInitial = true;
+
 function setupEventListeners() {
-    const loginButton = document.getElementById('login');
+    const signInButton = document.getElementById('sign-in');
+    const signUpButton = document.getElementById('sign-up');
     const logoutButton = document.getElementById('logout');
     const dialog = document.getElementById('form-dialog');
     const form = document.getElementById('login-form');
     const todoForm = document.getElementById('todoForm');
 
-    loginButton.addEventListener('click', () => {
+    signInButton.addEventListener('click', () => {
+        document.getElementById('dialog-title').textContent = 'Sign In';
+        dialog.setAttribute('data-mode', 'sign-in');
+        document.getElementById('sign-in-fields').style.display = 'block';
+        document.getElementById('sign-up-fields').style.display = 'none';
+        document.getElementById('email').required = true;
+        document.getElementById('password').required = true;
+        document.getElementById('firstName').required = false;
+        document.getElementById('lastName').required = false;
+        document.getElementById('signUpEmail').required = false;
+        document.getElementById('signUpPassword').required = false;
         dialog.showModal();
+        isInitial = true;
+        validateForm();
+    });
+
+    signUpButton.addEventListener('click', () => {
+        document.getElementById('dialog-title').textContent = 'Sign Up';
+        dialog.setAttribute('data-mode', 'sign-up');
+        document.getElementById('sign-in-fields').style.display = 'none';
+        document.getElementById('sign-up-fields').style.display = 'block';
+        document.getElementById('email').required = false;
+        document.getElementById('password').required = false;
+        document.getElementById('firstName').required = true;
+        document.getElementById('lastName').required = true;
+        document.getElementById('signUpEmail').required = true;
+        document.getElementById('signUpPassword').required = true;
+        dialog.showModal();
+        isInitial = true;
+        validateForm();
     });
 
     logoutButton.addEventListener('click', () => {
         removeCurrentUserName();
-        loginButton.style.display = 'inline-block';
+        document.querySelector('.login-container').style.display = 'block';
+        document.querySelector('.container-todos').style.display = 'none';
         logoutButton.setAttribute('hidden', true);
-        document.querySelector('.login-container p').style.display = 'block';
         document.getElementById('mainTodoList').style.display = 'none';
         const userInfo = document.getElementById('user-info');
         userInfo.style.display = 'none';
@@ -30,36 +74,62 @@ function setupEventListeners() {
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-        handleLogin();
+        const mode = dialog.getAttribute('data-mode');
+        if (form.checkValidity()) {
+            if (mode === 'sign-in') {
+                handleSignIn();
+            } else if (mode === 'sign-up') {
+                handleSignUp();
+            }
+        }
+    });
+
+   
+    const inputs = form.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            isInitial = false;
+            validateForm();
+        });
     });
 
     todoForm.addEventListener('submit', (event) => {
         event.preventDefault();
         handleAddTodo();
     });
+
+    const todoInput = document.getElementById('todoInput');
+    const addButton = document.querySelector('.container-todos button[type="submit"]');
+    addButton.disabled = true; 
+    todoInput.addEventListener('input', () => {
+        if (todoInput.value.trim() === '') {
+            addButton.disabled = true;
+        } else {
+            addButton.disabled = false;
+        }
+    });
 }
 
-function handleLogin() {
-    const userName = document.getElementById('name').value.trim();
+function handleSignIn() {
+    const email = document.getElementById('email').value.trim();
     const userPassword = document.getElementById('password').value.trim();
 
-    if (!userName || !userPassword) return;
+    if (!email || !userPassword) return;
 
-
-    let authenticatedUser = authenticateUser(userName, userPassword);
+    const authenticatedUser = authenticateUser(email, userPassword);
     if (authenticatedUser !== null) {
- 
         document.getElementById('form-dialog').close();
         document.getElementById('login-form').reset();
 
-        document.getElementById('login').style.display = 'none';
+        document.querySelector('.login-container').style.display = 'none';
+        document.querySelector('.container-todos').style.display = 'block';
         document.getElementById('logout').removeAttribute('hidden');
-        document.querySelector('.login-container p').style.display = 'none';
         document.getElementById('mainTodoList').style.display = 'block';
 
         const userInfo = document.getElementById('user-info');
         const userNameSpan = document.getElementById('user-name');
-        userNameSpan.textContent = userName;
+        const user = getUser(authenticatedUser);
+        userNameSpan.textContent = user.firstName + user.lastName.charAt(0);
         userInfo.style.display = 'inline';
 
         setCurrentUserName(authenticatedUser);
@@ -67,36 +137,37 @@ function handleLogin() {
         return;
     }
 
-    
-    const existingUsers = getUsers();
-    if (existingUsers[userName]) {
-        
-        showMessage('Username or password is incorrect.');
+    showMessage('Email or password is incorrect.');
+}
+
+function handleSignUp() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('signUpEmail').value.trim();
+    const userPassword = document.getElementById('signUpPassword').value.trim();
+
+    if (!firstName || !lastName || !email || !userPassword) {
+        showMessage('All fields are required.');
         return;
     }
 
-  
-    authenticatedUser = createUser(userName, userPassword);
-    if (authenticatedUser === null) {
-        showMessage('Failed to create user.');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showMessage('Please enter a valid email address.');
+        return;
+    }
+
+    const newUser = createUser(firstName, lastName, email, userPassword);
+    if (newUser === null) {
+        showMessage('User already exists.');
         return;
     }
 
     document.getElementById('form-dialog').close();
     document.getElementById('login-form').reset();
 
-    document.getElementById('login').style.display = 'none';
-    document.getElementById('logout').removeAttribute('hidden');
-    document.querySelector('.login-container p').style.display = 'none';
-    document.getElementById('mainTodoList').style.display = 'block';
-
-    const userInfo = document.getElementById('user-info');
-    const userNameSpan = document.getElementById('user-name');
-    userNameSpan.textContent = userName;
-    userInfo.style.display = 'inline';
-
-    setCurrentUserName(authenticatedUser);
-    renderTodos();
+    
+    showMessage('Account created successfully! Please sign in to access your todo list.');
 }
 
 function handleAddTodo() {
@@ -109,6 +180,12 @@ function handleAddTodo() {
     const todoInput = document.getElementById('todoInput');
     const task = todoInput.value.trim();
     if (task) {
+        const user = getUser(currentUserName);
+        const existingTodo = user.todos.find(todo => todo.task.toLowerCase() === task.toLowerCase());
+        if (existingTodo) {
+            showMessage('Todo already exists!');
+            return;
+        }
         addTodo(currentUserName, task);
         todoInput.value = '';
         renderTodos();
@@ -159,6 +236,13 @@ export function renderTodos() {
 
     const todoList = document.getElementById('mainTodoList');
     todoList.innerHTML = '';
+
+    if (user.todos.length === 0) {
+        todoList.style.display = 'none';
+        return;
+    }
+
+    todoList.style.display = 'block';
 
     user.todos.forEach((todo, index) => {
         const li = document.createElement('li');
@@ -229,4 +313,45 @@ function handleRemoveTodo(index) {
 
     removeTodo(currentUserName, index);
     renderTodos();
+}
+
+function validateForm(showMessages = false) {
+    const mode = document.getElementById('form-dialog').getAttribute('data-mode');
+    const submitButton = document.getElementById('submit-form-button');
+    let missingFields = [];
+
+    if (mode === 'sign-in') {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        if (!email) missingFields.push('Email');
+        if (!password) missingFields.push('Password');
+    } else if (mode === 'sign-up') {
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const email = document.getElementById('signUpEmail').value.trim();
+        const password = document.getElementById('signUpPassword').value.trim();
+
+        if (!firstName) missingFields.push('First Name');
+        if (!lastName) missingFields.push('Last Name');
+        if (!email) missingFields.push('Email');
+        if (!password) missingFields.push('Password');
+    }
+
+    if (missingFields.length > 0) {
+        submitButton.disabled = true;
+        submitButton.style.cursor = 'not-allowed';
+        if (showMessages) {
+            showMessage(`Please fill in the following fields: ${missingFields.join(', ')}`);
+        }
+    } else {
+        submitButton.disabled = false;
+        submitButton.style.cursor = 'pointer';
+        const existingMessage = document.querySelector('.login-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+    }
+
+    return missingFields.length === 0;
 }

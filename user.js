@@ -1,22 +1,12 @@
-let allUsersData = (() => {
-    const storedData = localStorage.getItem('allUsersData');
+let users = (() => {
+    const storedData = localStorage.getItem('users');
     if (!storedData) return {};
 
     try {
         const decrypted = decryptData(storedData);
         console.log(decrypted);
         return JSON.parse(decrypted);
-    } catch {
-        return {};
-    }
-})();
-
-let users = (() => {
-    const storedData = localStorage.getItem('users');
-    if (!storedData) return {};
-
-    try {
-        return JSON.parse(storedData);
+       
     } catch {
         return {};
     }
@@ -48,55 +38,50 @@ function encryptPassword(password) {
     );
 }
 
-export function authenticateUser(userName, userPassword) {
+export function authenticateUser(email, userPassword) {
     const encryptedPassword = encryptPassword(userPassword);
-    if (users[userName] === encryptedPassword) {
-        return userName;
+    if (users[email] && users[email].password === encryptedPassword) {
+        return email;
     }
     return null;
 }
 
-export function createUser(userName, userPassword) {
-    if (users[userName]) {
+export function createUser(firstName, lastName, email, userPassword) {
+    if (users[email]) {
         return null;
     }
-    users[userName] = encryptPassword(userPassword);
-    allUsersData[userName] = [];
+    users[email] = { firstName, lastName, email, password: encryptPassword(userPassword), todos: [] };
     saveData();
-    return userName;
+    return email;
 }
 
-export function getUser(userName) {
-    return { userName, todos: allUsersData[userName] || [] };
+export function getUser(email) {
+    return users[email] || null;
 }
 
 function saveData() {
-    localStorage.setItem(
-        'allUsersData',
-        encryptData(JSON.stringify(allUsersData))
-    );
-    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('users', encryptData(JSON.stringify(users)));
 }
 
-export function addTodo(userName, task) {
-    if (allUsersData[userName]) {
-        allUsersData[userName].push({ task, completed: false });
+export function addTodo(email, task) {
+    if (users[email]) {
+        users[email].todos.push({ task, completed: false });
         saveData();
     }
 }
 
-export function updateTodo(userName, todoIndex, newTask) {
-    const user = allUsersData[userName];
-    if (user && user[todoIndex]) {
-        user[todoIndex].task = newTask;
+export function updateTodo(email, todoIndex, newTask) {
+    const user = users[email];
+    if (user && user.todos[todoIndex]) {
+        user.todos[todoIndex].task = newTask;
         saveData();
     }
 }
 
-export function removeTodo(userName, todoIndex) {
-    const user = allUsersData[userName];
-    if (user && user[todoIndex]) {
-        user.splice(todoIndex, 1);
+export function removeTodo(email, todoIndex) {
+    const user = users[email];
+    if (user && user.todos[todoIndex]) {
+        user.todos.splice(todoIndex, 1);
         saveData();
     }
 }
